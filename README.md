@@ -24,9 +24,9 @@
 - se quiser executar relatórios, executar o comando:   
         
            yarn playwright show-report
-           
 
-        ![alt text](image/show_report.png)
+
+![alt text](image/show_report.png)
 
 4º Baixar, descompactar e levar para o diretório playwright_express os arquivos de mark_dev_build, fornecido no curso para criação do ambiente de teste
 
