@@ -2,9 +2,12 @@
 
 ## Instalação do projeto
 
-1º Instalação do node   
-2º Instalação do yarn  
-3º Entre no diretório de trabalho (playwright_mark) e instale o playwright
+### 1º 
+Instalação do node   
+### 2º 
+Instalação do yarn  
+### 3º 
+Entre no diretório de trabalho (playwright_mark) e instale o playwright
 
         yarn create playwright
 
@@ -28,16 +31,19 @@
 
 ![alt text](image/show_report.png)
 
-4º Baixar, descompactar e levar para o diretório playwright_express os arquivos de mark_dev_build, fornecido no curso para criação do ambiente de teste
+### 4º 
+Baixar, descompactar e levar para o diretório playwright_express os arquivos de mark_dev_build, fornecido no curso para criação do ambiente de teste
 
-5º Em playwright_express > apps > api 
+### 5º 
+Em playwright_express > apps > api 
 executar o comando para instalação das dependências do projeto
 
         yarn install  
 
 A pasta do node_modules será acrescentada na pasta api.   
 
-6º No mesmo diretório, iniciar o banco de dados:     
+### 6º 
+No mesmo diretório, iniciar o banco de dados:     
 
         yarn db:init
 
@@ -45,11 +51,13 @@ Vai iniciar a estrutura de dados do projeto, criando as tabelas, etc.
 
 ![alt text](image/iniciacao_banco.png)
 
-7º No mesmo diretório, subir as APIs  
+### 7º 
+No mesmo diretório, subir as APIs  
 
         yarn dev       
 
-8º Abrir uma nova aba no terminal enquanto a API executa. Em playwright_express > apps > web executar o comando para subir a aplicação web:  
+### 8º 
+Abrir uma nova aba no terminal enquanto a API executa. Em playwright_express > apps > web executar o comando para subir a aplicação web:  
 
         yarn dev
 
@@ -61,33 +69,34 @@ Para acessar a aplicação: http:localhost/3000
 
 (Ou, como originalmente no projeto, 8080)
 
-9º Para executar o playwright, acessar o diretório playwright_express > playwright_mark e executar: 
+### 9º 
+Para executar o playwright, acessar o diretório playwright_express > playwright_mark e executar: 
 
         yarn playwright test
 
 
 ## Estrutura de teste
 
-`import {test, expect} from '@playwright/test';
+        import {test, expect} from '@playwright/test';
 
-test('webapp deve estar online', async ({page}) => {
-    await page.goto('http://localhost:3000');
-});`
+        test('webapp deve estar online', async ({page}) => {
+            await page.goto('http://localhost:3000');
+        });
 
 
 
-1º sempre importar o test e o except
+### 1º sempre importar o test e o except
         
 - test: É a função central para definir e agrupar seus testes. É a maneira de registrar um novo caso de teste com este framework.
 
 - expect: É a função usada para fazer asserções (ou verificações) no seu teste.
 
-2º Page
+### 2º Page
 
 O objeto page (do tipo Page no TypeScript) é a API central que você usa para interagir com o conteúdo da página web que está sendo testada.
 Ele tem métodos para executar quase todas as ações que um usuário faria manualmente no navegador.
 
-3º async e await
+### 3º async e await
 
 Tanto o Javascript quanto o Typescript são linguagens async. Isso que dizer que elas executam ações em paralelo, sem enfileirá-las.  
 
@@ -97,10 +106,10 @@ O await é uma palavra-chave que só pode ser usada dentro de uma função async
 
 ## Diferença entre Playwright e o Cypress no assincronismo. 
 
-Se tanto o Javascript quanto o Typescript são linguagens assíncronas, porque somente no Playwright é necessário definir a função como assíncrona? 
+Se tanto o **Javascript** quanto o **Typescript** são linguagens **assíncronas**, porque somente no Playwright é necessário definir a função como assíncrona? 
 
-O Cypress é baseado em uma fila de comandos interna (Command Queue). Não precisa de await porque ele enfileira comandos e os executa de forma síncrona, um de cada vez, internamente.
+O **Cypress** é baseado em uma fila de comandos interna (Command Queue). Não precisa de await porque ele enfileira comandos e os executa de forma síncrona, um de cada vez, internamente.
 
 ex: cy.visit() / cy.click()
 
-O Playwright é baseado em Promises (async/await), puro JavaScript. O Playwright injeta esperas automáticas, mas a estrutura de código precisa do await para gerenciar a ordem das Promises.
+O **Playwright** é baseado em Promises (async/await), puro JavaScript. O Playwright injeta esperas automáticas, mas a estrutura de código precisa do await para gerenciar a ordem das Promises.
