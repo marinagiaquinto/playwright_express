@@ -2,12 +2,9 @@
 
 ## Instalação do projeto
 
-### 1º 
-Instalação do node   
-### 2º 
-Instalação do yarn  
-### 3º 
-Entre no diretório de trabalho (playwright_mark) e instale o playwright
+**1º** Instalação do node    
+**2º** Instalação do yarn  
+**3º** Entre no diretório de trabalho (playwright_mark) e instale o playwright
 
         yarn create playwright
 
@@ -31,19 +28,16 @@ Entre no diretório de trabalho (playwright_mark) e instale o playwright
 
 ![alt text](image/show_report.png)
 
-### 4º 
-Baixar, descompactar e levar para o diretório playwright_express os arquivos de mark_dev_build, fornecido no curso para criação do ambiente de teste
+**4º** Baixar, descompactar e levar para o diretório playwright_express os arquivos de mark_dev_build, fornecido no curso para criação do ambiente de teste
 
-### 5º 
-Em playwright_express > apps > api 
+**5º** Em playwright_express > apps > api 
 executar o comando para instalação das dependências do projeto
 
         yarn install  
 
 A pasta do node_modules será acrescentada na pasta api.   
 
-### 6º 
-No mesmo diretório, iniciar o banco de dados:     
+**6º** No mesmo diretório, iniciar o banco de dados:     
 
         yarn db:init
 
@@ -51,13 +45,11 @@ Vai iniciar a estrutura de dados do projeto, criando as tabelas, etc.
 
 ![alt text](image/iniciacao_banco.png)
 
-### 7º 
-No mesmo diretório, subir as APIs  
+**7º** No mesmo diretório, subir as APIs  
 
         yarn dev       
 
-### 8º 
-Abrir uma nova aba no terminal enquanto a API executa. Em playwright_express > apps > web executar o comando para subir a aplicação web:  
+**8º** Abrir uma nova aba no terminal enquanto a API executa. Em playwright_express > apps > web executar o comando para subir a aplicação web:  
 
         yarn dev
 
@@ -69,10 +61,11 @@ Para acessar a aplicação: http:localhost/3000
 
 (Ou, como originalmente no projeto, 8080)
 
-### 9º 
-Para executar o playwright, acessar o diretório playwright_express > playwright_mark e executar: 
+**9º** Para executar o playwright, acessar o diretório playwright_express > playwright_mark e executar: 
 
         yarn playwright test
+
+
 
 
 ## Estrutura de teste
