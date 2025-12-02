@@ -11,18 +11,20 @@
 
 ![alt text](image/instalacao.png)
 
- - Comandos para a execução do playwright
+ - Comandos para a execução do playwright  
+
  ![alt text](image/comandos.png)
 
 
  Obs: 
-        - o playwright baixa seus próprios browser para trabalhar;  
+- o playwright baixa seus próprios browser para trabalhar;  
 
-        - seguindo o playwright.config.ts, cada teste é executado em paralelo em 3 navegadores. Se não quiser que execute em todos, utilizar o comando acima que cita o navegador de execução;  
+- seguindo o playwright.config.ts, cada teste é executado em paralelo em 3 navegadores. Se não quiser que execute em todos, utilizar o comando acima que cita o navegador de execução;  
 
-        - se quiser executar relatórios, executar o comando:   
+- se quiser executar relatórios, executar o comando:   
         
            yarn playwright show-report
+           
 
         ![alt text](image/show_report.png)
 
@@ -76,9 +78,9 @@ test('webapp deve estar online', async ({page}) => {
 
 1º sempre importar o test e o except
         
-        - test: É a função central para definir e agrupar seus testes. É a maneira de registrar um novo caso de teste com este framework.
+- test: É a função central para definir e agrupar seus testes. É a maneira de registrar um novo caso de teste com este framework.
 
-        - expect: É a função usada para fazer asserções (ou verificações) no seu teste.
+- expect: É a função usada para fazer asserções (ou verificações) no seu teste.
 
 2º Page
 
