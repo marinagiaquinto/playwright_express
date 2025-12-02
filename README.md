@@ -11,17 +11,16 @@
 
 ![alt text](image/instalacao.png)
 
- - Comandos para a execução do playwright  
+ Comandos para a execução do playwright  
 
  ![alt text](image/comandos.png)
 
+ 
+Obs1: o playwright baixa seus próprios browser para trabalhar;  
 
- Obs: 
-- o playwright baixa seus próprios browser para trabalhar;  
+Obs2: seguindo o playwright.config.ts, cada teste é executado em paralelo em 3 navegadores. Se não quiser que execute em todos, utilizar o comando acima que cita o navegador de execução;  
 
-- seguindo o playwright.config.ts, cada teste é executado em paralelo em 3 navegadores. Se não quiser que execute em todos, utilizar o comando acima que cita o navegador de execução;  
-
-- se quiser executar relatórios, executar o comando:   
+Obs3: se quiser executar relatórios, executar o comando:   
         
            yarn playwright show-report
 
@@ -89,7 +88,7 @@ expect: É a função usada para fazer asserções (ou verificações) no seu te
 O objeto page (do tipo Page no TypeScript) é a API central que você usa para interagir com o conteúdo da página web que está sendo testada.
 Ele tem métodos para executar quase todas as ações que um usuário faria manualmente no navegador.
 
-**3º async e await**
+- **3º async e await**
 
 Tanto o Javascript quanto o Typescript são linguagens async. Isso que dizer que elas executam ações em paralelo, sem enfileirá-las.  
 
