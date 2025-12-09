@@ -14,7 +14,6 @@
  Comandos para a execução do playwright  
 
  ![alt text](image/comandos.png)
-
  
 Obs1: o playwright baixa seus próprios browser para trabalhar;  
 
@@ -105,3 +104,43 @@ O **Cypress** é baseado em uma fila de comandos interna (Command Queue). Não p
 ex: cy.visit() / cy.click()
 
 O **Playwright** é baseado em Promises (async/await), puro JavaScript. O Playwright injeta esperas automáticas, mas a estrutura de código precisa do await para gerenciar a ordem das Promises.
+
+
+## Execução do Playwright sem ser por linha de comando 
+
+        yarn playwright test --headed
+
+## Debug
+
+Abre uma página em branco e você precisa ir pela tela do playwright avançando cada linha do código para poder debugar. 
+
+        yarn playwright test --debug
+
+![alt text](image/debug.png)
+
+## Formatação do documento
+
+Para formatar o documento da maneira certa, clicar com botão direito do mouse > format document
+
+![alt text](image/format_document.png)
+
+
+## Dados fake
+
+Para criar massa de dados fake, entrar na biblioteca faker do npm. 
+
+![alt text](image/faker.png)
+
+Instalar no projeto como dependência de desenvolvimento:
+
+        yarn add @faker-js/faker -D
+
+![alt text](image/user_faker.png)
+
+## Tipo da propriedade
+
+O typescript é tipado. Então em diversos momentos vai precisar colocar o tipo da propriedade para criar as funções. 
+
+Passar o mouse por cima da propriedade. 
+
+![alt text](image/type.png)
