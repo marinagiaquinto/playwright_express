@@ -28,7 +28,7 @@ export class TasksPage {
 
 
     async go() {
-        await this.page.goto('http://localhost:3000');
+        await this.page.goto('/');
     }
 
 

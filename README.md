@@ -144,3 +144,4 @@ O typescript é tipado. Então em diversos momentos vai precisar colocar o tipo 
 Passar o mouse por cima da propriedade. 
 
 ![alt text](image/type.png)
+

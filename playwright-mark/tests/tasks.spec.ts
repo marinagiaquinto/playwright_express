@@ -4,21 +4,19 @@ import { deleteTaskByHelper, postTask } from './support/helpers';
 import { TasksPage } from './support/pages/tasks/index';
 import data from './fixtures/tasks.json';
 
+let tasksPage: TasksPage; 
+
+test.beforeEach(({ page }) => {
+    tasksPage = new TasksPage(page);
+});
 
 test.describe('Cadastro de tarefas', () => {
 
-    test('deve poder cadastraruma nova tarefa', async ({ page, request }) => {
+    test('deve poder cadastraruma nova tarefa', async ({ request }) => {
 
         const task = data.sucess as TaskModel;
 
         await deleteTaskByHelper(request, task.name);
-
-        const tasksPage: TasksPage = new TasksPage(page);
-        //const taskPage: TasksPage -> Declara uma nova variável chamada taskPage do tipo TasksPage
-        // Isso garante que a variável taskPage só pode armazenar objetos que são instâncias da classe TasksPage
-        // new TasksPage(page) -> Chama o método constructor da classe TasksPage para inicializar esse novo objeto.
-        // page aqui já está na pág de teste. Será esse contexto que será passado para a classe TasksPage
-        // para que saiba exatamente o contexto em que precisa manipular o navegador.
 
         await tasksPage.go();
         await tasksPage.created(task);
@@ -27,7 +25,7 @@ test.describe('Cadastro de tarefas', () => {
 
     });
 
-    test('não deve permiti tarefa duplicada', async ({ page, request }) => {
+    test('não deve permiti tarefa duplicada', async ({ request }) => {
 
         const task = data.duplicate as TaskModel;
 
@@ -35,19 +33,15 @@ test.describe('Cadastro de tarefas', () => {
 
         await postTask(request, task);
 
-        const tasksPage: TasksPage = new TasksPage(page);
-
         await tasksPage.go();
         await tasksPage.created(task);
         await tasksPage.alertHaveText('Task already exists!');
 
     })
 
-    test('campo obrigatório', async ({ page }) => {
+    test('campo obrigatório', async () => {
 
         const task = data.required as TaskModel;
-
-        const tasksPage: TasksPage = new TasksPage(page);
 
         await tasksPage.go();
         await tasksPage.created(task);
@@ -68,14 +62,12 @@ test.describe('Cadastro de tarefas', () => {
 
 test.describe('Atualização de tarefas', () => {
 
-    test('deve concluir uma tarefa', async ({ page, request }) => {
+    test('deve concluir uma tarefa', async ({ request }) => {
 
         const task = data.update as TaskModel;
 
         await deleteTaskByHelper(request, task.name);
         await postTask(request, task);
-
-        const tasksPage: TasksPage = new TasksPage(page);
 
         await tasksPage.go();
 
@@ -89,13 +81,11 @@ test.describe('Atualização de tarefas', () => {
 
 test.describe('Exclusão de tarefas', () => {
 
-    test.only('deve excluir uma tarefa', async ({ page, request }) => {
+    test('deve excluir uma tarefa', async ({ request }) => {
         const task = data.delete as TaskModel;
 
         await deleteTaskByHelper(request, task.name);
         await postTask(request, task);
-
-        const tasksPage: TasksPage = new TasksPage(page);
 
         await tasksPage.go();
         
