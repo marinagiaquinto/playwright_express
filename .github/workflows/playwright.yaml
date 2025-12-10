@@ -20,6 +20,42 @@ jobs:
       run: npm install -g yarn && yarn # 2. Instala dependências (yarn)
       working-directory: ./playwright-mark # <--- ATENÇÃO: Executa na subpasta
 
+# Instalando dependências da aplicação (Assumindo que há um package.json na raiz de apps)
+    - name: Install Application Dependencies
+      run: yarn
+      working-directory: ./apps
+
+    # Instalando 'wait-on' para aguardar o servidor subir
+    - name: Install wait-on
+      run: npm install wait-on
+
+    - name: Start Application Services (Web:3000 & API:3333)
+      run: |
+        # Inicia o servidor Web (Frontend) em background
+        yarn dev &
+        
+        # Volta para a pasta da API (Assumindo que api/web têm scripts dev na raiz de 'apps/')
+        # Se os scripts estiverem dentro de 'apps/web' e 'apps/api', veja a NOTA abaixo.
+        # Você deve adaptar este comando para refletir como você inicia o frontend e backend.
+        
+        # INICIAR A API: Assumindo que o script 'dev' em apps/ inicia ambos
+        
+        # Se você tiver que iniciar dois scripts separados (o cenário mais comum):
+        # 1. Inicia o frontend (http-server em 3000)
+        (cd web && yarn dev) &
+        # 2. Inicia o backend (Express em 3333)
+        (cd api && yarn dev) &
+        
+        # Se a sua aplicação tem um script de start na raiz de 'apps/' que faz tudo, 
+        # use apenas: yarn dev &
+      working-directory: ./apps # Executa o comando 'yarn dev' no diretório apps/
+
+    - name: Wait for Services to be Ready
+      run: |
+        # Espera que ambas as portas estejam ativas antes de iniciar os testes
+        ./node_modules/.bin/wait-on http://localhost:3000 http://localhost:3333 -t 60000
+        
+
     - name: Install Playwright Browsers
       run: yarn playwright install --with-deps # 3. Instala os browsers
       working-directory: ./playwright-mark # <--- ATENÇÃO: Executa na subpasta
