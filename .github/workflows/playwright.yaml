@@ -16,57 +16,66 @@ jobs:
       with:
         node-version: 18
 
-    - name: Install dependencies
-      run: npm install -g yarn && yarn # 2. Instala dependências (yarn)
-      working-directory: ./playwright-mark # <--- ATENÇÃO: Executa na subpasta
+    # --- 1. Instalação de Dependências ---
 
-# Instalando dependências da aplicação (Assumindo que há um package.json na raiz de apps)
-    - name: Install Application Dependencies
+    # 1.1. Instalação de dependências do Playwright Project (./playwright-mark)
+    - name: Install Playwright Project Dependencies
+      run: npm install -g yarn && yarn
+      working-directory: ./playwright-mark
+
+    # 1.2. Instalação de dependências do Backend (./playwright_express/apps/api)
+    - name: Install API Dependencies
       run: yarn
-      working-directory: ./apps
+      working-directory: ./playwright_express/apps/api
 
-    # Instalando 'wait-on' para aguardar o servidor subir
-    - name: Install wait-on
-      run: npm install wait-on
+    # 1.3. Instalação de dependências do Frontend (./playwright_express/apps/web)
+    - name: Install Web Dependencies
+      run: yarn
+      working-directory: ./playwright_express/apps/web
+
+    # 1.4. Instalação do 'wait-on' no projeto Playwright (para ser facilmente acessível)
+    - name: Install wait-on in Playwright Project
+      run: yarn add wait-on
+      working-directory: ./playwright-mark
+
+    # --- 2. Início dos Serviços ---
 
     - name: Start Application Services (Web:3000 & API:3333)
       run: |
-        # Inicia o servidor Web (Frontend) em background
+        # Inicia o Backend (API) em background
+        echo "Starting API Service..."
         yarn dev &
         
-        # Volta para a pasta da API (Assumindo que api/web têm scripts dev na raiz de 'apps/')
-        # Se os scripts estiverem dentro de 'apps/web' e 'apps/api', veja a NOTA abaixo.
-        # Você deve adaptar este comando para refletir como você inicia o frontend e backend.
+        # Inicia o Frontend (Web) em background
+        echo "Starting Web Service..."
+        (cd ../web && yarn dev) &
         
-        # INICIAR A API: Assumindo que o script 'dev' em apps/ inicia ambos
-        
-        # Se você tiver que iniciar dois scripts separados (o cenário mais comum):
-        # 1. Inicia o frontend (http-server em 3000)
-        (cd web && yarn dev) &
-        # 2. Inicia o backend (Express em 3333)
-        (cd api && yarn dev) &
-        
-        # Se a sua aplicação tem um script de start na raiz de 'apps/' que faz tudo, 
-        # use apenas: yarn dev &
-      working-directory: ./apps # Executa o comando 'yarn dev' no diretório apps/
+        # O comando 'wait' impede que o step termine imediatamente, garantindo que
+        # os processos em background continuem rodando.
+        # No entanto, eles já são mantidos vivos pelo `&`. A próxima etapa de `wait-on`
+        # garante que o workflow não avance antes dos servidores estarem prontos.
+      working-directory: ./playwright_express/apps/api # Começa na pasta da API e usa cd ../web para a Web
 
     - name: Wait for Services to be Ready
       run: |
         # Espera que ambas as portas estejam ativas antes de iniciar os testes
-        ./node_modules/.bin/wait-on http://localhost:3000 http://localhost:3333 -t 60000
-        
+        # Note o caminho ajustado para o wait-on dentro da pasta do projeto de testes
+        ./node_modules/.bin/wait-on http://localhost:3000 http://localhost:3333 -t 120000 # Aumentei o timeout para 2 minutos (120000ms)
+      working-directory: ./playwright-mark # Garante que o wait-on seja executado de onde foi instalado
+
+    # --- 3. Execução dos Testes ---
 
     - name: Install Playwright Browsers
-      run: yarn playwright install --with-deps # 3. Instala os browsers
-      working-directory: ./playwright-mark # <--- ATENÇÃO: Executa na subpasta
+      run: yarn playwright install --with-deps
+      working-directory: ./playwright-mark
 
     - name: Run Playwright tests
-      run: yarn playwright test # 4. Roda os testes
-      working-directory: ./playwright-mark # <--- ATENÇÃO: Executa na subpasta
+      run: yarn playwright test
+      working-directory: ./playwright-mark
       
     - uses: actions/upload-artifact@v4
       if: ${{ !cancelled() }}
       with:
         name: playwright-report
-        path: playwright-mark/playwright-report/ # <--- ATENÇÃO: Ajusta o caminho do relatório
+        path: playwright-mark/playwright-report/
         retention-days: 30
