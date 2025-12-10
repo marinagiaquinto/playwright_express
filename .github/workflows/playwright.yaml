@@ -10,13 +10,27 @@ jobs:
     timeout-minutes: 60
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v4 # 1. Checa o código (na raiz)
+
     - uses: actions/setup-node@v4
       with:
         node-version: 18
+
     - name: Install dependencies
-      run: npm install -g yarn && yarn
+      run: npm install -g yarn && yarn # 2. Instala dependências (yarn)
+      working-directory: ./playwright-mark # <--- ATENÇÃO: Executa na subpasta
+
     - name: Install Playwright Browsers
-      run: yarn playwright install --with-deps
+      run: yarn playwright install --with-deps # 3. Instala os browsers
+      working-directory: ./playwright-mark # <--- ATENÇÃO: Executa na subpasta
+
     - name: Run Playwright tests
-      run: yarn playwright test
+      run: yarn playwright test # 4. Roda os testes
+      working-directory: ./playwright-mark # <--- ATENÇÃO: Executa na subpasta
+      
+    - uses: actions/upload-artifact@v4
+      if: ${{ !cancelled() }}
+      with:
+        name: playwright-report
+        path: playwright-mark/playwright-report/ # <--- ATENÇÃO: Ajusta o caminho do relatório
+        retention-days: 30
